@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Sample JSF Application</title>
+    <link href="css/site.css" rel="stylesheet" />
+    <style type="text/css">
+        .value {
+            font-weight: bold;
+        }
+    </style>
+    <!-- import jquery.js   -->
+    <h:outputScript library="primefaces" name="jquery/jquery.js" />
+</h:head>
+<body>
+<!--
+ The preRenderView event is an event in the JavaServer Faces (JSF) framework that is triggered before the page is rendered. In this event, you can perform operations such as preparing data, handling request parameters, or executing other logic related to the page before rendering.
+ -->
+<f:event type="preRenderView" listener="#{dataGridView.preRenderView}" />
+
+<h:form id="form">
+    <p:dataGrid var="car" value="#{dataGridView.items}" columns="3" layout="grid"
+                rows="12" paginator="true" id="cars"
+                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                rowsPerPageTemplate="6,12,16">
+
+        <f:facet name="header">
+            Cars for Sale
+        </f:facet>
+
+        <p:panel header="#{car.id}" style="text-align:center">
+            <h:panelGrid columns="1" style="width:100%">
+                <p:graphicImage name="demo/images/car/#{car.brand}.gif"/>
+
+                <h:outputText value="#{car.year}" />
+                <p:commandLink update=":form:carDetail" oncomplete="PF('carDialog').show()" title="View Detail" action="#{dataGridView.viewCarDetails}" >
+                    <h:outputText styleClass="pi pi-search" style="margin:0 auto;"/>
+                    <f:param name="carId" value="#{car.id}" />
+                </p:commandLink>
+            </h:panelGrid>
+        </p:panel>
+
+    </p:dataGrid>
+
+    <p:dialog header="Car Info" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+        <p:outputPanel id="carDetail" style="text-align:center;">
+            <p:panelGrid  columns="2" rendered="#{not empty dataGridView.selectedCar}" columnClasses="label,value">
+                <f:facet name="header">
+                    <p:graphicImage name="demo/images/car/#{dataGridView.selectedCar.brand}-big.gif"/>
+                </f:facet>
+
+                <h:outputText value="Id:" />
+                <h:outputText value="#{dataGridView.selectedCar.id}" />
+
+                <h:outputText value="Year" />
+                <h:outputText value="#{dataGridView.selectedCar.year}" />
+
+                <h:outputText value="Color:" />
+                <h:outputText value="#{dataGridView.selectedCar.color}" style="color:#{dataGridView.selectedCar.color}"/>
+
+                <h:outputText value="Price" />
+                <h:outputText value="$#{dataGridView.selectedCar.price}" />
+            </p:panelGrid>
+        </p:outputPanel>
+    </p:dialog>
+</h:form>
+
+</body>
+</html>
