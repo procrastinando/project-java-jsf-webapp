@@ -24,11 +24,8 @@ public class PrimefacesBean {
      *
      * @link index.xhtml line 46
      */
+//    private List<String> themes = Arrays.asList("arya", "luna-amber", "luna-blue", "luna-green", "luna-pink", "nova-colored", "nova-dark", "nova-light", "saga", "vela");
     private List<String> themes = Arrays.asList("saga", "GREEN", "BLUE", "BLACK");
-
-    //    not used
-    private List<String> countries = Arrays.asList("arya", "luna-amber", "luna-blue", "luna-green", "luna-pink", "nova-colored", "nova-dark", "nova-light", "saga", "vela");
-
 
     // Getter and setter for prompt
     public String getPrompt() {
@@ -73,10 +70,6 @@ public class PrimefacesBean {
      *
      * @return
      */
-    public List<String> getCountries() {
-        return countries;
-    }
-
 
     // Methods
     public void generateMethod(String type) {
