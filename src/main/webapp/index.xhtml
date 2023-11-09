@@ -60,15 +60,15 @@
     <h:body>
         <h:outputText value="&lt;h1&gt;PrimeFaces Components&lt;/h1&gt;" escape="false" />
         <h:form>
-            <p:outputLabel for="token" value="Token:" />
+            <p:outputLabel for="token" value="#{msgs.token}:" />
             <p:inputText id="token" value="#{PrimefacesBean.token}" />
             <br />
-            <p:outputLabel for="prompt" value="Prompt:" />
+            <p:outputLabel for="prompt" value="#{msgs.prompt}:" />
             <p:inputText id="prompt" value="#{PrimefacesBean.prompt}" />
             <br />
             <div>
-                <div><p:commandButton value="Generate by Ajax" action="#{PrimefacesBean.generateMethod('ajax')}" update="result" /></div>
-                <div><p:commandButton value="Generate by server proxy" action="#{PrimefacesBean.generateMethod('proxy')}" update="result" /></div>
+                <div><p:commandButton value="#{msgs.generated_by_ajax}" action="#{PrimefacesBean.generateMethod('ajax')}" update="result" /></div>
+                <div><p:commandButton value="#{msgs.generated_by_server_proxy}" action="#{PrimefacesBean.generateMethod('proxy')}" update="result" /></div>
             </div>
 
             <hr/>
@@ -86,7 +86,7 @@
                 <f:selectItems value="#{PrimefacesBean.themes}"/>
             </p:selectOneMenu>
             <br/>
-            <p:commandButton value="Change theme" action="#{PrimefacesBean.useThemeAction()}" update="currentTheme">
+            <p:commandButton value="#{msgs.change_the_theme}" action="#{PrimefacesBean.useThemeAction()}" update="currentTheme">
             </p:commandButton>
             <br/>
             current theme: <h:outputText  value="#{PrimefacesBean.theme}"/>
