@@ -5,6 +5,12 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
     <h:outputStylesheet>
+        *{
+            margin: 5px 5px 5px 5px;
+        }
+        button{
+            margin: 5px;
+        }
         .BLUE {
             background-color: #1d539d;
             color: aliceblue;
@@ -60,11 +66,18 @@
             <p:outputLabel for="prompt" value="Prompt:" />
             <p:inputText id="prompt" value="#{PrimefacesBean.prompt}" />
             <br />
-            <p:commandButton value="Generate" action="#{PrimefacesBean.generateMethod}" update="result" />
-            <br />
+            <div>
+                <div><p:commandButton value="Generate by Ajax" action="#{PrimefacesBean.generateMethod('ajax')}" update="result" /></div>
+                <div><p:commandButton value="Generate by server proxy" action="#{PrimefacesBean.generateMethod('proxy')}" update="result" /></div>
+            </div>
+
+            <hr/>
+
             <h:outputText id="result" value= "#{PrimefacesBean.result}" />
         </h:form>
         <h:outputText value="&lt;h1&gt;Change the theme&lt;/h1&gt;" escape="false" />
+
+
 
         <h:form id="currentTheme" class="#{PrimefacesBean.theme}">
             <p:selectOneMenu value="#{PrimefacesBean.theme}">

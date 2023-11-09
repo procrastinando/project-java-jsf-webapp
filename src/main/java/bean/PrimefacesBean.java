@@ -1,6 +1,7 @@
 package bean;
 
 import org.primefaces.PrimeFaces;
+import service.RequestProxy;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -78,10 +79,18 @@ public class PrimefacesBean {
 
 
     // Methods
-    public void generateMethod() {
-        result = "Hello, " + prompt + token + "!";
-        // call page JavaScript         
-        PrimeFaces.current().executeScript("sendRequest('"+prompt+"','" + token + "')");
+    public void generateMethod(String type) {
+        switch (type) {
+            case "ajax":
+                // call page JavaScript
+                PrimeFaces.current().executeScript("sendRequest('" + prompt + "','" + token + "')");
+                break;
+            case "proxy":
+                result = RequestProxy.request(prompt, token);
+                break;
+            default:
+                result = "Hello, " + prompt + token + "!";
+        }
     }
 
     /**
