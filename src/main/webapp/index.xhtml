@@ -86,7 +86,7 @@
                 <f:selectItems value="#{PrimefacesBean.themes}"/>
             </p:selectOneMenu>
             <br/>
-            <p:commandButton value="Generate" action="#{PrimefacesBean.useThemeAction()}" update="currentTheme">
+            <p:commandButton value="Change theme" action="#{PrimefacesBean.useThemeAction()}" update="currentTheme">
             </p:commandButton>
             <br/>
             current theme: <h:outputText  value="#{PrimefacesBean.theme}"/>
