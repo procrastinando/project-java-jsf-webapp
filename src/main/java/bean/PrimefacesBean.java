@@ -1,6 +1,5 @@
 package bean;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import java.util.Arrays;
@@ -13,14 +12,17 @@ public class PrimefacesBean {
     private String prompt;
     private String token;
     private String result;
-    private String themes;
-    private List<String> countries;
+    /**
+     * FIXME add
+     * init themes items , and gen get method
+     *
+     * @link index.xhtml line 46
+     */
+    private List<String> themes = Arrays.asList("saga", "GREEN", "BLUE", "BLACK");
 
-    @PostConstruct
-    public void init() {
-        // initialize the list of countries
-        countries = Arrays.asList("arya", "luna-amber", "luna-blue", "luna-green", "luna-pink", "nova-colored", "nova-dark", "nova-light", "saga", "vela");
-    }
+    //    not used
+    private List<String> countries = Arrays.asList("arya", "luna-amber", "luna-blue", "luna-green", "luna-pink", "nova-colored", "nova-dark", "nova-light", "saga", "vela");
+
 
     // Getter and setter for prompt
     public String getPrompt() {
@@ -55,15 +57,32 @@ public class PrimefacesBean {
     }
 
     // getter and setter for themes
+
+    public List<String> getThemes() {
+        return themes;
+    }
+
+    /**
+     * not used
+     *
+     * @return
+     */
     public List<String> getCountries() {
         return countries;
     }
-    public void setThemes(List<String> themes) {
-        this.themes = themes.toString();
-    }
+
 
     // Methods
     public void generateMethod() {
         result = "Hello, " + prompt + token + "!";
+    }
+
+    /**
+     * 用于接收按钮请求,当前功能无需其他处理
+     * @Link index.xhtml line 49
+     */
+    public void useThemeAction() {
+        //
+        System.out.println("theme: " + theme);
     }
 }
