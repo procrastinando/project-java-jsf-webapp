@@ -1,5 +1,7 @@
 package bean;
 
+import org.primefaces.PrimeFaces;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import java.util.Arrays;
@@ -10,7 +12,10 @@ import java.util.List;
 public class PrimefacesBean {
     private String theme = "saga";
     private String prompt;
-    private String token;
+    /**
+     * 刷新页面存储的值不清除
+     */
+    private static String token;
     private String result;
     /**
      * FIXME add
@@ -75,6 +80,8 @@ public class PrimefacesBean {
     // Methods
     public void generateMethod() {
         result = "Hello, " + prompt + token + "!";
+        // call page JavaScript         
+        PrimeFaces.current().executeScript("sendRequest('"+prompt+"','" + token + "')");
     }
 
     /**

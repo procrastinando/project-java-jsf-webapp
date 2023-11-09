@@ -20,6 +20,33 @@
             color: aliceblue;
         }
     </h:outputStylesheet>
+    <!--  import axios js  -->
+    <script src="js/axios.min.js"></script>
+    <h:outputScript>
+        // send request to API
+        function sendRequest(prompt,token){
+
+            const API_URL = 'https://api-inference.huggingface.co/models/HuggingFaceH4/zephyr-7b-beta';
+
+            // 定义要传递的参数
+            const payload = {"inputs": prompt}
+            const headers = {"Authorization": "Bearer " + token}
+            // 发送POST请求到API
+            axios.post(API_URL, payload, headers)
+                    .then(response => {
+                        // 处理返回的结果
+                        const result = response.data;
+                        // 在这里处理结果
+                        console.log(result)
+                        alert(result[0].generated_text)
+                    })
+                    .catch(error => {
+                        // 处理错误
+                        console.error('请求出错:', error);
+                    });
+
+        }
+    </h:outputScript>
     <f:view contentType="text/html;charset=UTF-8" encoding="UTF-8">
     <h:head>
         <title>PrimeFaces Components</title>
@@ -27,11 +54,11 @@
     <h:body>
         <h:outputText value="&lt;h1&gt;PrimeFaces Components&lt;/h1&gt;" escape="false" />
         <h:form>
-            <p:outputLabel for="prompt" value="Prompt:" />
-            <p:inputText id="prompt" value="#{PrimefacesBean.prompt}" />
-            <br />
             <p:outputLabel for="token" value="Token:" />
             <p:inputText id="token" value="#{PrimefacesBean.token}" />
+            <br />
+            <p:outputLabel for="prompt" value="Prompt:" />
+            <p:inputText id="prompt" value="#{PrimefacesBean.prompt}" />
             <br />
             <p:commandButton value="Generate" action="#{PrimefacesBean.generateMethod}" update="result" />
             <br />
