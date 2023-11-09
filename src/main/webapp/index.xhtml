@@ -4,32 +4,93 @@
                 xmlns:jsf="http://xmlns.jcp.org/jsf"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
+    <h:outputStylesheet>
+        *{
+            margin: 5px 5px 5px 5px;
+        }
+        button{
+            margin: 5px;
+        }
+        .BLUE {
+            background-color: #1d539d;
+            color: aliceblue;
+        }
 
+        .GREEN {
+            background-color: darkgreen;
+            color: aliceblue;
+        }
+
+        .BLACK {
+            background-color: black;
+            color: aliceblue;
+        }
+    </h:outputStylesheet>
+    <!--  import axios js  -->
+    <script src="js/axios.min.js"></script>
+    <h:outputScript>
+        // send request to API
+        function sendRequest(prompt,token){
+
+            const API_URL = 'https://api-inference.huggingface.co/models/HuggingFaceH4/zephyr-7b-beta';
+
+            // 定义要传递的参数
+            const payload = {"inputs": prompt}
+            const headers = {"Authorization": "Bearer " + token}
+            // 发送POST请求到API
+            axios.post(API_URL, payload, headers)
+                    .then(response => {
+                        // 处理返回的结果
+                        const result = response.data;
+                        // 在这里处理结果
+                        console.log(result)
+                        alert(result[0].generated_text)
+                    })
+                    .catch(error => {
+                        // 处理错误
+                        console.error('请求出错:', error);
+                    });
+
+        }
+    </h:outputScript>
     <f:view contentType="text/html;charset=UTF-8" encoding="UTF-8">
-        <h:head>
-            <title>PrimeFaces Components</title>
-        </h:head>
-        <h:body>
-            <h:outputText value="&lt;h1&gt;PrimeFaces Components&lt;/h1&gt;" escape="false" />
-            <h:form>
-                <p:outputLabel for="prompt" value="Prompt:" />
-                <p:inputText id="prompt" value="#{PrimefacesBean.prompt}" />
-                <br />
-                <p:outputLabel for="token" value="Token:" />
-                <p:inputText id="token" value="#{PrimefacesBean.token}" />
-                <br />
-                <p:commandButton value="Generate" action="#{PrimefacesBean.generateMethod}" update="result" />
-                <br />
-                <h:outputText id="result" value= "#{PrimefacesBean.result}" />
-            </h:form>
-            <h:outputText value="&lt;h1&gt;Change the theme&lt;/h1&gt;" escape="false" />
-            <h:form>
-                <p:selectOneMenu value="#{PrimefacesBean.theme}">
-                    <f:selectItem itemLabel="Select Theme" itemValue="" noSelectionOption="true"/>
-                    <f:selectItems value="#{bean.themes}"/>
-                </p:selectOneMenu>
-            </h:form>
-        </h:body>
-    </f:view>
+    <h:head>
+        <title>PrimeFaces Components</title>
+    </h:head>
+    <h:body>
+        <h:outputText value="&lt;h1&gt;PrimeFaces Components&lt;/h1&gt;" escape="false" />
+        <h:form>
+            <p:outputLabel for="token" value="Token:" />
+            <p:inputText id="token" value="#{PrimefacesBean.token}" />
+            <br />
+            <p:outputLabel for="prompt" value="Prompt:" />
+            <p:inputText id="prompt" value="#{PrimefacesBean.prompt}" />
+            <br />
+            <div>
+                <div><p:commandButton value="Generate by Ajax" action="#{PrimefacesBean.generateMethod('ajax')}" update="result" /></div>
+                <div><p:commandButton value="Generate by server proxy" action="#{PrimefacesBean.generateMethod('proxy')}" update="result" /></div>
+            </div>
 
+            <hr/>
+
+            <h:outputText id="result" value= "#{PrimefacesBean.result}" />
+        </h:form>
+        <h:outputText value="&lt;h1&gt;Change the theme&lt;/h1&gt;" escape="false" />
+
+
+
+        <h:form id="currentTheme" class="#{PrimefacesBean.theme}">
+            <p:selectOneMenu value="#{PrimefacesBean.theme}">
+                <f:selectItem itemLabel="Select Theme" itemValue="" noSelectionOption="true"/>
+                <!-- use themes -->
+                <f:selectItems value="#{PrimefacesBean.themes}"/>
+            </p:selectOneMenu>
+            <br/>
+            <p:commandButton value="Generate" action="#{PrimefacesBean.useThemeAction()}" update="currentTheme">
+            </p:commandButton>
+            <br/>
+            current theme: <h:outputText  value="#{PrimefacesBean.theme}"/>
+        </h:form>
+    </h:body>
+</f:view>
 </ui:composition>
