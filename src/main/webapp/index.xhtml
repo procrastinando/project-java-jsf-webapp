@@ -1,60 +1,35 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
-<html xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:ui="http://java.sun.com/jsf/facelets"
-        xmlns:f="http://java.sun.com/jsf/core"
-        xmlns:h="http://java.sun.com/jsf/html"
-        xmlns:p="http://primefaces.org/ui">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
 
-<h:head>
-<title>Sample JSF Application</title>
-    <link href="css/site.css" rel="stylesheet" />
-</h:head> 
-<body> 
-<div class="main-container">
-        <div class="cloud-image">
-            <img src="img/successCloudNew.svg" />
-        </div>
-        <div class="content">
-            <div class="tweet-container">
-			<a href="http://twitter.com/intent/tweet/?text=I%20just%20created%20a%20new%20Java%20website%20on%20Azure%20using%20Azure%20DevOps%20Project&amp;hashtags=AzureDevOpsProject%2CVSTS%20%40Azure%20%40VSTS">
-                <img src="img/tweetThis.svg" />
-			</a>
-        </div>
-            <div class="content-body">
-                <div class="success-text">Success!</div>
-                <div class="description line-1"> Azure DevOps Project has been successfully setup</div>
-                <div class="description line-2"> <h:outputText value = "#{helloBean.message}" /></div>
-                <div class="next-steps-container">
-                    <div class="next-steps-header">Next up</div>
-                    <div class="next-steps-body">
-                        <div class="step">
-                            <div class="step-icon">
-                                <img src="img/cloneWhite.svg" />
-                            </div>
-                            <div class="step-text"><a href="https://go.microsoft.com/fwlink/?linkid=862409">Clone your code repository and start developing your application on IDE of your choice</a></div>
-                        </div>
-                        <div class="step">
-                            <div class="step-icon">
-                                <img src="img/deployWhite.svg" />
-                            </div>
-                            <div class="step-text"><a href="https://go.microsoft.com/fwlink/?linkid=862410">View your CI/CD pipeline on Visual Studio Team Services and customize it as per your needs</a></div>
-                        </div>
-                        <div class="step">
-                            <div class="step-icon">
-                                <img src="img/stackWhite.svg" />
-                            </div>
-                            <div class="step-text"><a href="http://portal.azure.com">View your service stack in the Azure Portal</a></div>
-                        </div>
-                        <div class="step">
-                            <div class="step-icon">
-                                <img src="img/lightbulbWhite.svg" />
-                            </div>
-                            <div class="step-text"><a href="https://go.microsoft.com/fwlink/?linkid=862126">Learn more about all you can do with Azure projects by visiting the documentation</a></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</body> 
-</html>
+    <f:view contentType="text/html;charset=UTF-8" encoding="UTF-8">
+        <h:head>
+            <title>PrimeFaces Components</title>
+        </h:head>
+        <h:body>
+            <h:outputText value="&lt;h1&gt;PrimeFaces Components&lt;/h1&gt;" escape="false" />
+            <h:form>
+                <p:outputLabel for="prompt" value="Prompt:" />
+                <p:inputText id="prompt" value="#{PrimefacesBean.prompt}" />
+                <br />
+                <p:outputLabel for="token" value="Token:" />
+                <p:inputText id="token" value="#{PrimefacesBean.token}" />
+                <br />
+                <p:commandButton value="Generate" action="#{PrimefacesBean.generateMethod}" update="result" />
+                <br />
+                <h:outputText id="result" value= "#{PrimefacesBean.result}" />
+            </h:form>
+            <h:outputText value="&lt;h1&gt;Change the theme&lt;/h1&gt;" escape="false" />
+            <h:form>
+                <p:selectOneMenu value="#{PrimefacesBean.theme}">
+                    <f:selectItem itemLabel="Select Theme" itemValue="" noSelectionOption="true"/>
+                    <f:selectItems value="#{bean.themes}"/>
+                </p:selectOneMenu>
+            </h:form>
+        </h:body>
+    </f:view>
+
+</ui:composition>
