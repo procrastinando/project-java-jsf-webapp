@@ -1,17 +1,22 @@
 package bean;
 
 import org.primefaces.PrimeFaces;
+import org.primefaces.config.PrimeConfiguration;
+import org.primefaces.context.PrimeApplicationContext;
 import service.RequestProxy;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.List;
 
 @ManagedBean(name = "PrimefacesBean")
 @RequestScoped
 public class PrimefacesBean {
-    private String theme = "saga";
+    private static String theme = "Saga";
     private String prompt;
     /**
      * 刷新页面存储的值不清除
@@ -24,7 +29,18 @@ public class PrimefacesBean {
      *
      * @link index.xhtml line 46
      */
-    private List<String> themes = Arrays.asList("saga", "GREEN", "BLUE", "BLACK");
+
+
+    private List<String> themes = Arrays.asList("saga",
+            "arya",
+            "luna-amber",
+            "luna-blue",
+            "luna-green",
+            "luna-pink",
+            "nova-colored",
+            "nova-dark",
+            "nova-light",
+            "vela");
 
     //    not used
     private List<String> countries = Arrays.asList("arya", "luna-amber", "luna-blue", "luna-green", "luna-pink", "nova-colored", "nova-dark", "nova-light", "saga", "vela");
@@ -97,8 +113,22 @@ public class PrimefacesBean {
      * 用于接收按钮请求,当前功能无需其他处理
      * @Link index.xhtml line 49
      */
-    public void useThemeAction() {
-        //
-        System.out.println("theme: " + theme);
+    public void useThemeAction() throws Exception {
+        // Get PrimeFaces configuration object
+        PrimeConfiguration config = PrimeApplicationContext.getCurrentInstance(FacesContext.getCurrentInstance()).getConfig();
+
+        /** begin java  reflect modify final constant (Not a recommended routine) **/
+        Field field = PrimeConfiguration.class.getDeclaredField("theme");
+        field.setAccessible(true);
+
+        Field modifiersField = Field.class.getDeclaredField("modifiers");
+        modifiersField.setAccessible(true);
+        modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+
+        field.set(config, this.getTheme().toLowerCase());
+        /** end java  reflect modify final constant **/
+
+        // refresh page apply new theme
+        PrimeFaces.current().executeScript("window.location.reload()");
     }
 }
