@@ -16,7 +16,7 @@ import java.util.List;
 @ManagedBean(name = "PrimefacesBean")
 @RequestScoped
 public class PrimefacesBean {
-    private static String theme = "Saga";
+    private String theme = "saga";
     private String prompt;
     /**
      * 刷新页面存储的值不清除
@@ -41,10 +41,7 @@ public class PrimefacesBean {
             "nova-dark",
             "nova-light",
             "vela");
-
-    //    not used
-    private List<String> countries = Arrays.asList("arya", "luna-amber", "luna-blue", "luna-green", "luna-pink", "nova-colored", "nova-dark", "nova-light", "saga", "vela");
-
+//    private List<String> themes = Arrays.asList("arya", "luna-amber", "luna-blue", "luna-green", "luna-pink", "nova-colored", "nova-dark", "nova-light", "saga", "vela");
 
     // Getter and setter for prompt
     public String getPrompt() {
@@ -89,10 +86,6 @@ public class PrimefacesBean {
      *
      * @return
      */
-    public List<String> getCountries() {
-        return countries;
-    }
-
 
     // Methods
     public void generateMethod(String type) {
