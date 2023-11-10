@@ -16,7 +16,7 @@ import java.util.List;
 @ManagedBean(name = "PrimefacesBean")
 @RequestScoped
 public class PrimefacesBean {
-    private String theme = "saga";
+    private static String theme = "saga";
     private String prompt;
     /**
      * 刷新页面存储的值不清除
