@@ -58,17 +58,30 @@
         <title>PrimeFaces Components</title>
     </h:head>
     <h:body>
+        <h:form>
+            <h:panelGrid columns="2">
+                <h:outputText value="Select Language: " />
+                <p:selectOneMenu value="#{languageBean.selectedLanguage}">
+                    <f:selectItem itemLabel="English" itemValue="en" />
+                    <f:selectItem itemLabel="Chinese" itemValue="zh" />
+                </p:selectOneMenu>
+            </h:panelGrid>
+            <h:outputText id="message" value="#{msgs.welcome_message}" />
+
+            <p:commandButton value="Submit" update="message"  icon="pi pi-check" />
+        </h:form>
+
         <h:outputText value="&lt;h1&gt;PrimeFaces Components&lt;/h1&gt;" escape="false" />
         <h:form>
-            <p:outputLabel for="token" value="#{msgs.token}:" />
+            <p:outputLabel for="token" value="#{msgs.label_token}:" />
             <p:inputText id="token" value="#{PrimefacesBean.token}" />
             <br />
-            <p:outputLabel for="prompt" value="#{msgs.prompt}:" />
+            <p:outputLabel for="prompt" value="#{msgs.label_prompt}:" />
             <p:inputText id="prompt" value="#{PrimefacesBean.prompt}" />
             <br />
             <div>
-                <div><p:commandButton value="#{msgs.generated_by_ajax}" action="#{PrimefacesBean.generateMethod('ajax')}" update="result" /></div>
-                <div><p:commandButton value="#{msgs.generated_by_server_proxy}" action="#{PrimefacesBean.generateMethod('proxy')}" update="result" /></div>
+                <div><p:commandButton value="#{msgs['button.generated.byAjax']}" action="#{PrimefacesBean.generateMethod('ajax')}" update="result" /></div>
+                <div><p:commandButton value="#{msgs['button.generated.byServerProxy']}" action="#{PrimefacesBean.generateMethod('proxy')}" update="result" /></div>
             </div>
 
             <hr/>
@@ -86,7 +99,7 @@
                 <f:selectItems value="#{PrimefacesBean.themes}"/>
             </p:selectOneMenu>
             <br/>
-            <p:commandButton value="#{msgs.change_the_theme}" action="#{PrimefacesBean.useThemeAction()}" update="currentTheme">
+            <p:commandButton value="#{msgs['button.changeTheme']}" action="#{PrimefacesBean.useThemeAction()}" update="currentTheme">
             </p:commandButton>
             <br/>
             current theme: <h:outputText  value="#{PrimefacesBean.theme}"/>
